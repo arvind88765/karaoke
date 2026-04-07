@@ -43,7 +43,6 @@ def upload():
 
     return send_file(instrumental_path, as_attachment=False)
 
-# Render deployment fix
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
+    port = int(os.environ.get("PORT", 8000))
     app.run(host="0.0.0.0", port=port)
