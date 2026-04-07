@@ -26,27 +26,43 @@ def home():
 
 @app.route("/upload", methods=["POST"])
 def upload():
-    if "file" not in request.files:
-        return {"error": "No file uploaded"}, 400
-
-    file = request.files["file"]
-
-    unique_id = str(uuid.uuid4())
-    input_path = os.path.join(UPLOAD_FOLDER, unique_id + ".mp3")
-
-    file.save(input_path)
-
     try:
+        if "file" not in request.files:
+            return {"error": "No file uploaded"}, 400
+
+        file = request.files["file"]
+
+        print("📥 File received:", file.filename)
+
+        unique_id = str(uuid.uuid4())
+        input_path = os.path.join(UPLOAD_FOLDER, unique_id + ".mp3")
+
+        file.save(input_path)
+        print("💾 File saved at:", input_path)
+
         # 🎧 Process audio
         separator.separate_to_file(input_path, OUTPUT_FOLDER)
+        print("🎵 Processing done")
+
+        folder_name = os.path.splitext(os.path.basename(input_path))[0]
+
+        instrumental_path = os.path.join(
+            OUTPUT_FOLDER, folder_name, "accompaniment.wav"
+        )
+
+        print("📂 Output path:", instrumental_path)
+
+        if not os.path.exists(instrumental_path):
+            print("❌ Output file missing")
+            return {"error": "Output file not found"}, 500
+
+        print("✅ Sending file")
+
+        return send_file(instrumental_path, as_attachment=False)
+
     except Exception as e:
+        print("🔥 ERROR:", str(e))
         return {"error": str(e)}, 500
-
-    folder_name = os.path.splitext(os.path.basename(input_path))[0]
-
-    instrumental_path = os.path.join(
-        OUTPUT_FOLDER, folder_name, "accompaniment.wav"
-    )
 
     # ✅ Safety check
     if not os.path.exists(instrumental_path):
