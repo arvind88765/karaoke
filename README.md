@@ -32,15 +32,16 @@ An AI-powered web application that removes vocals from songs and generates karao
 karaoke-app/
 │
 ├── backend/
-│ ├── app.py
-│ ├── requirements.txt
-│ ├── uploads/
-│ └── output/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── temp/
+│       ├── uploads/
+│       └── output/
 │
 ├── frontend/
-│ ├── index.html
-│ ├── style.css
-│ └── script.js
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
 │
 ├── .gitignore
 ├── README.md
