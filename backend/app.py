@@ -19,7 +19,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 # Load Spleeter model once
-separator = Separator('spleeter:2stems')
+separator = Separator('spleeter:2stems-16kHz')
 
 @app.route("/")
 def home():
