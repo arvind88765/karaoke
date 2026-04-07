@@ -1,7 +1,7 @@
 let wavesurfer;
 
 // 🔁 CHANGE THIS AFTER DEPLOY
-const BACKEND_URL = "http://127.0.0.1:5000";
+const BACKEND_URL = "https://karaoke-27nj.onrender.com";
 
 function initWaveSurfer(url) {
     if (wavesurfer) {
