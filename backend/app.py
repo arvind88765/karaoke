@@ -2,6 +2,7 @@ from flask import Flask, request, send_file
 from flask_cors import CORS
 import os
 import uuid
+import subprocess
 from spleeter.separator import Separator
 
 app = Flask(__name__)
@@ -12,6 +13,17 @@ OUTPUT_FOLDER = "output"
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+# 🔥 Ensure ffmpeg exists
+def ensure_ffmpeg():
+    try:
+        subprocess.run(["ffmpeg", "-version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print("FFmpeg already installed ✅")
+    except:
+        print("Installing FFmpeg... 🔧")
+        os.system("apt-get update && apt-get install -y ffmpeg")
+
+ensure_ffmpeg()
 
 # Load Spleeter model
 separator = Separator('spleeter:2stems')
@@ -32,14 +44,21 @@ def upload():
 
     file.save(input_path)
 
-    # Process audio
-    separator.separate_to_file(input_path, OUTPUT_FOLDER)
+    # 🎧 Process audio
+    try:
+        separator.separate_to_file(input_path, OUTPUT_FOLDER)
+    except Exception as e:
+        return {"error": str(e)}, 500
 
     folder_name = os.path.splitext(os.path.basename(input_path))[0]
 
     instrumental_path = os.path.join(
         OUTPUT_FOLDER, folder_name, "accompaniment.wav"
     )
+
+    # 🔥 Check file exists
+    if not os.path.exists(instrumental_path):
+        return {"error": "Processing failed"}, 500
 
     return send_file(instrumental_path, as_attachment=False)
 
