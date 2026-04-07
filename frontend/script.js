@@ -1,7 +1,7 @@
 let wavesurfer;
 
 // 🔁 CHANGE THIS AFTER DEPLOY
-const BACKEND_URL = "https://karaoke-27nj.onrender.com";
+const BACKEND_URL = "https://karaoke-production-016c.up.railway.app/";
 
 function initWaveSurfer(url) {
     if (wavesurfer) {
