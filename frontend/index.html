@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Karaoke App 🎤</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<h2>Karaoke Generator 🎶</h2>
+
+<input type="file" id="fileInput">
+<button onclick="upload()">Upload & Remove Vocals</button>
+
+<p id="status"></p>
+
+<div id="waveform"></div>
+
+<div class="controls">
+  <button onclick="playPause()">Play / Pause</button>
+
+  <label>Speed:</label>
+  <select onchange="changeSpeed(this.value)">
+    <option value="0.5">0.5x</option>
+    <option value="1" selected>1x</option>
+    <option value="1.5">1.5x</option>
+  </select>
+</div>
+
+<script src="https://unpkg.com/wavesurfer.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
