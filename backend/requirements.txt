@@ -3,5 +3,6 @@ flask-cors==3.0.10
 werkzeug==2.0.3
 spleeter==2.4.2
 ffmpeg-python==0.2.0
+imageio-ffmpeg
 gunicorn==20.1.0
 numpy==1.24.3
